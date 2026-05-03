@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zomato Strategic Outreach | Kunj Harjai</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Inter:wght@400;600;800&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#E23744',   /* Zomato Red */
+                        secondary: '#000000', /* Zomato Black */
+                        accent: '#22C55E',    /* Base Green Fallback */
+                        warning: '#F59E0B',
+                        amber: '#F59E0B',
+                        dark: '#1A1A1A',
+                        paper: '#F4F4F4',
+                        white: '#FFFFFF',
+                    },
+                    fontFamily: {
+                        display: ['"Bricolage Grotesque"', 'sans-serif'],
+                        body: ['Inter', 'sans-serif'],
+                        mono: ['"Space Mono"', 'monospace'],
+                    },
+                    boxShadow: {
+                        'brutal': '6px 6px 0px 0px #1A1A1A',
+                        'brutal-lg': '8px 8px 0px 0px #1A1A1A',
+                        'brutal-hover': '2px 2px 0px 0px #1A1A1A',
+                        'brutal-primary': '6px 6px 0px 0px #E23744',
+                        'brutal-secondary': '6px 6px 0px 0px #000000',
+                    },
+                    borderWidth: {
+                        '4': '4px',
+                        '6': '6px',
+                        '8': '8px',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        :root {
+            --primary: #E23744;
+            --secondary: #000000;
+            --accent: #22C55E;
+            --warning: #F59E0B;
+            --dark: #1A1A1A;
+            --paper: #F4F4F4;
+            --white: #FFFFFF;
+        }
+
+        body {
+            background-color: var(--paper);
+            color: var(--dark);
+            overflow-x: hidden;
+            font-family: 'Inter', sans-serif;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.02'/%3E%3C/svg%3E");
+        }
+
+        * {
+            border-radius: 0 !important;
+        }
+
+        h1, h2, h3, h4, h5, h6, .font-display {
+            font-family: 'Bricolage Grotesque', sans-serif;
+        }
+
+        .font-mono {
+            font-family: 'Space Mono', monospace;
+        }
+
+        /* Marquee Animation */
+        .marquee-container {
+            overflow: hidden;
+            white-space: nowrap;
+            width: 100vw;
+            border-top: 4px solid var(--dark);
+            border-bottom: 4px solid var(--dark);
+            background: var(--dark);
+            color: var(--white);
+            padding: 12px 0;
+            display: flex;
+        }
+
+        .marquee-content {
+            display: inline-block;
+            animation: marquee 20s linear infinite;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* Scroll Reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Custom Hover States */
+        .btn-brutal {
+            transition: all 0.1s ease;
+        }
+
+        .btn-brutal:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 8px 8px 0px 0px var(--dark);
+        }
+
+        .btn-brutal:active {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0px 0px var(--dark);
+        }
+
+        /* Grid Background pattern */
+        .bg-grid {
+            background-size: 40px 40px;
+            background-image:
+                linear-gradient(to right, rgba(26, 26, 26, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(26, 26, 26, 0.05) 1px, transparent 1px);
+        }
+
+        .stamp {
+            transform: rotate(-12deg);
+            display: inline-block;
+        }
+
+        .stamp.alt {
+            transform: rotate(12deg);
+        }
+
+        /* Chart Animations */
+        .animate-bar { transform: scaleX(0); transform-origin: left; transition: transform 0.8s ease-out; }
+        .animate-bar-y { transform: scaleY(0); transform-origin: bottom; transition: transform 0.8s ease-out; }
+        .animate-pie { opacity: 0; transform: scale(0.5) rotate(-90deg); transition: all 0.8s ease-out; }
+        .animate-marker { opacity: 0; transform: scale(0); transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+
+        .active .animate-bar { transform: scaleX(1); }
+        .active .animate-bar-y { transform: scaleY(1); }
+        .active .animate-pie { opacity: 1; transform: scale(1) rotate(0deg); }
+        .active .animate-marker { opacity: 1; transform: scale(1); }
+
+        /* Conic Gradient for Pie Chart */
+        .pie-chart {
+            background: conic-gradient(var(--secondary) 0% 30%, var(--primary) 30% 100%);
+            border-radius: 50% !important; /* One exception for pie chart shape */
+            clip-path: circle(50% at 50% 50%);
+        }
+    </style>
+</head>
+<body class="bg-grid relative min-h-screen">
+
+    <!-- Header Marquee -->
+    <div class="fixed top-0 z-50 w-full">
+        <div class="marquee-container font-mono text-sm uppercase font-bold tracking-widest">
+            <div class="marquee-content">
+                District App Launch Q4 2025 &nbsp;•&nbsp; Blinkit Store-Level Profitability &nbsp;•&nbsp; Ads Revenue 60%+ YoY &nbsp;•&nbsp; Adjusted EBITDA Positive &nbsp;•&nbsp; 100M+ Downloads &nbsp;•&nbsp;
+                District App Launch Q4 2025 &nbsp;•&nbsp; Blinkit Store-Level Profitability &nbsp;•&nbsp; Ads Revenue 60%+ YoY &nbsp;•&nbsp; Adjusted EBITDA Positive &nbsp;•&nbsp; 100M+ Downloads &nbsp;•&nbsp;
+            </div>
+            <div class="marquee-content" aria-hidden="true">
+                District App Launch Q4 2025 &nbsp;•&nbsp; Blinkit Store-Level Profitability &nbsp;•&nbsp; Ads Revenue 60%+ YoY &nbsp;•&nbsp; Adjusted EBITDA Positive &nbsp;•&nbsp; 100M+ Downloads &nbsp;•&nbsp;
+                District App Launch Q4 2025 &nbsp;•&nbsp; Blinkit Store-Level Profitability &nbsp;•&nbsp; Ads Revenue 60%+ YoY &nbsp;•&nbsp; Adjusted EBITDA Positive &nbsp;•&nbsp; 100M+ Downloads &nbsp;•&nbsp;
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTAINER -->
+    <main class="max-w-7xl mx-auto px-6 pt-24 md:pt-32 pb-40 space-y-40">
+
+        <!-- SLIDE 1: INTRODUCTION & HOOK -->
+        <section class="reveal grid grid-cols-1 lg:grid-cols-12 gap-12 items-center min-h-[80vh]">
+            <div class="col-span-1 lg:col-span-5 flex flex-col space-y-8">
+                <!-- Branding -->
+                <div class="inline-flex items-center gap-3">
+                    <div class="bg-primary text-white font-display font-black text-3xl italic tracking-tighter px-4 py-1 border-4 border-dark shadow-brutal lowercase">zomato</div>
+                </div>
+
+                <div class="space-y-6">
+                    <p class="font-mono text-xs uppercase tracking-widest bg-dark text-white p-2 inline-block shadow-brutal border-4 border-dark">
+                        Product Internship // Summer 2026</p>
+
+                    <h2 class="text-5xl lg:text-6xl font-display font-black leading-none uppercase">
+                        Ecosystem <br>
+                        <span class="text-white bg-primary px-2 border-y-4 border-l-4 border-dark shadow-[4px_4px_0_#1A1A1A] inline-block -rotate-1 mt-2">Orchestration</span>
+                    </h2>
+
+                    <div class="bg-white border-4 border-dark p-6 shadow-brutal space-y-4 text-lg">
+                        <p class="font-bold">Hi, I'm Kunj — and here's what stands out about Zomato:</p>
+                        <p class="text-dark/80">You've built India's definitive food and lifestyle ecosystem with <strong>100M+ app users</strong>, <strong>Blinkit's 600+ stores</strong>, and <strong>Zomato Gold</strong> driving 2x frequency. With <strong>District</strong> launching and ads revenue growing 60%+ <strong>YoY</strong>, you're expanding beyond delivery into the full "going out" and <strong>Quick Commerce</strong> economy.</p>
+                        <p class="text-dark/80">The next unlock is orchestrating these services into a unified ecosystem where <strong>Gold</strong> and data maximize user <strong>Lifetime Value (LTV)</strong> across all touchpoints.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Brutalist Impact Bar Chart -->
+            <div class="col-span-1 lg:col-span-7 bg-white border-4 border-dark p-8 shadow-brutal relative h-full flex flex-col justify-center min-h-[400px]">
+                
+                <div class="absolute -top-6 -right-6 stamp z-10">
+                    <div class="bg-accent text-dark border-4 border-dark px-4 py-2 font-mono font-bold text-sm shadow-brutal uppercase text-center leading-none">
+                        MARGIN<br>LEVER
+                    </div>
+                </div>
+
+                <div class="space-y-6 my-auto chart-trigger">
+                    <!-- Bar 1 -->
+                    <div class="relative w-full h-16 bg-paper flex items-center group">
+                        <div class="absolute top-0 left-0 h-full bg-primary border-4 border-dark shadow-brutal w-[100%] animate-bar !rounded-none"></div>
+                        <div class="relative z-10 px-4 font-mono font-bold text-white uppercase text-lg w-full">
+                            <span>100M+ App Users</span>
+                        </div>
+                    </div>
+
+                    <!-- Bar 2 -->
+                    <div class="relative w-full h-16 bg-paper flex items-center">
+                        <div class="absolute top-0 left-0 h-full bg-secondary border-4 border-dark shadow-brutal w-[70%] animate-bar" style="transition-delay: 150ms;"></div>
+                        <div class="relative z-10 px-4 font-mono font-bold text-white uppercase text-lg w-full">
+                            <span>600+ Blinkit Stores</span>
+                        </div>
+                    </div>
+
+                    <!-- Bar 3 -->
+                    <div class="relative w-full h-16 bg-paper flex items-center">
+                        <div class="absolute top-0 left-0 h-full bg-accent border-4 border-dark shadow-brutal w-[50%] animate-bar" style="transition-delay: 300ms;"></div>
+                        <div class="relative z-10 px-4 font-mono font-bold text-dark uppercase text-lg w-full">
+                            <span>Ads Growth 60%+</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 2: USER ANALYSIS -->
+        <section class="reveal space-y-12 chart-trigger">
+            <div class="max-w-3xl">
+                <h2 class="text-4xl md:text-5xl font-display font-black uppercase mb-6 bg-dark text-white inline-block px-4 py-2 border-4 border-transparent shadow-[6px_6px_0_#E23744]">
+                    User Analysis: Who Orders, How They Shift, What's Next
+                </h2>
+                <div class="bg-white border-4 border-dark p-6 shadow-brutal text-lg space-y-4">
+                    <p>Zomato's base is <strong>Tier 1-led, Gold-loyal, and increasingly multi-service</strong>. Food delivery remains core, but <strong>Quick Commerce</strong> adoption is accelerating, driving higher frequency.</p>
+                    <p><strong>Gold members</strong> show 2x engagement, and cross-service usage is up 25% <strong>YoY</strong>. The unlock is leveraging loyalty and data to deepen ecosystem adoption while expanding Tier 2/3 cohorts.</p>
+                </div>
+            </div>
+
+            <!-- Data Wall Grid: 2x2 -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+                <!-- Chart 1: Service Split Angular Pie -->
+                <div class="bg-white border-4 border-dark p-6 shadow-brutal flex flex-col items-center justify-center relative min-h-[300px]">
+                    <div class="font-display font-black text-xl border-b-4 border-dark pb-2 mb-6 w-full uppercase">Order Split</div>
+                    
+                    <div class="relative w-48 h-48 animate-pie">
+                        <div class="w-full h-full pie-chart border-4 border-dark shadow-brutal"></div>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="bg-white border-4 border-dark p-2 text-center shadow-brutal !rounded-none">
+                                <span class="font-mono font-bold text-sm block">ORDER</span>
+                                <span class="font-mono font-bold text-sm block">SPLIT</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-between w-full mt-6 font-mono font-bold text-sm">
+                        <div class="flex items-center gap-2">
+                            <div class="w-4 h-4 bg-primary border-2 border-dark"></div> Food: 70%
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <div class="w-4 h-4 bg-secondary border-2 border-dark"></div> QC: 30%
+                        </div>
+                    </div>
+                    <div class="absolute -top-3 -right-3 stamp z-10 hidden sm:block">
+                        <div class="bg-warning text-dark border-4 border-dark px-2 py-1 font-mono font-bold text-xs shadow-brutal uppercase">
+                            GROWTH<br>ENGINE
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chart 2: Loyalty Impact Bar Chart -->
+                <div class="bg-white border-4 border-dark p-6 shadow-brutal flex flex-col relative h-[300px]">
+                    <div class="font-display font-black text-xl border-b-4 border-dark pb-2 mb-6 uppercase">Loyalty Frequency</div>
+                    <div class="flex-1 flex items-end gap-8 mt-4 justify-center relative">
+                        <!-- Non-Gold -->
+                        <div class="w-1/3 h-[50%] bg-paper border-4 border-dark relative animate-bar-y shadow-brutal">
+                            <div class="absolute -top-8 left-1/2 -translate-x-1/2 font-mono font-bold text-xs whitespace-nowrap">Non-Gold: 2-3x/mo</div>
+                        </div>
+                        <!-- Gold -->
+                        <div class="w-1/3 h-[100%] bg-primary border-4 border-dark relative animate-bar-y shadow-brutal" style="transition-delay: 200ms;">
+                            <div class="absolute -top-8 left-1/2 -translate-x-1/2 font-mono font-bold text-xs whitespace-nowrap">Gold: 4-6x/mo</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chart 3: Behavior Shift Histogram -->
+                <div class="bg-white border-4 border-dark p-6 shadow-brutal flex flex-col justify-center gap-4 min-h-[300px]">
+                    <div class="font-display font-black text-xl border-b-4 border-dark pb-2 mb-2 uppercase">Behavior Shift</div>
+                    
+                    <div>
+                        <div class="font-mono text-sm font-bold mb-1">Cross-Service Adoption</div>
+                        <div class="w-full bg-paper border-4 border-dark h-8 relative shadow-brutal">
+                            <div class="absolute top-0 left-0 h-full bg-primary border-r-4 border-dark w-[40%] animate-bar"></div>
+                            <div class="absolute inset-y-0 left-4 flex items-center font-mono font-bold text-white z-10 mix-blend-difference text-xs">15% &rarr; 40%</div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="font-mono text-sm font-bold mb-1">QC Category Expansion</div>
+                        <div class="w-full bg-paper border-4 border-dark h-8 relative shadow-brutal">
+                            <div class="absolute top-0 left-0 h-full bg-accent border-r-4 border-dark w-[50%] animate-bar" style="transition-delay: 150ms;"></div>
+                            <div class="absolute inset-y-0 left-4 flex items-center font-mono font-bold text-dark z-10 text-xs">20% &rarr; 50%</div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="font-mono text-sm font-bold mb-1">Tier 2/3 Contribution</div>
+                        <div class="w-full bg-paper border-4 border-dark h-8 relative shadow-brutal">
+                            <div class="absolute top-0 left-0 h-full bg-secondary border-r-4 border-dark w-[40%] animate-bar" style="transition-delay: 300ms;"></div>
+                            <div class="absolute inset-y-0 left-4 flex items-center font-mono font-bold text-white z-10 text-xs">30% &rarr; 40%</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chart 4: User Segment Matrix -->
+                <div class="bg-white border-4 border-dark p-6 shadow-brutal relative min-h-[300px]">
+                    <div class="font-display font-black text-xl border-b-4 border-dark pb-2 mb-4 uppercase">User Segments</div>
+                    <div class="relative w-full h-[200px] border-4 border-dark bg-paper">
+                        <!-- Grid Details -->
+                        <div class="absolute bottom-2 left-1/2 -translate-x-1/2 font-mono text-[10px] font-bold uppercase">AOV</div>
+                        <div class="absolute top-1/2 left-2 -translate-y-1/2 font-mono text-[10px] font-bold uppercase -rotate-90">FREQ</div>
+                        <div class="absolute top-1/2 left-0 w-full border-t-2 border-dark border-dashed -translate-y-1/2"></div>
+                        <div class="absolute top-0 left-1/2 h-full border-l-2 border-dark border-dashed -translate-x-1/2"></div>
+
+                        <!-- Markers -->
+                        <div class="absolute top-[20%] left-[80%] -translate-x-1/2 -translate-y-1/2 animate-marker z-20">
+                            <div class="w-4 h-4 bg-primary border-2 border-dark shadow-[2px_2px_0_#1A1A1A]"></div>
+                            <span class="absolute top-5 left-1/2 -translate-x-1/2 font-mono text-[10px] bg-white border-2 border-dark whitespace-nowrap px-1 font-bold z-30">Gold Power Users</span>
+                        </div>
+                        
+                        <div class="absolute top-[40%] left-[30%] -translate-x-1/2 -translate-y-1/2 animate-marker z-20" style="transition-delay: 100ms;">
+                            <div class="w-4 h-4 bg-secondary border-2 border-dark shadow-[2px_2px_0_#1A1A1A]"></div>
+                            <span class="absolute top-5 left-1/2 -translate-x-1/2 font-mono text-[10px] bg-white border-2 border-dark whitespace-nowrap px-1 font-bold z-30">QC-First Adopters</span>
+                        </div>
+                        
+                        <div class="absolute top-[70%] left-[70%] -translate-x-1/2 -translate-y-1/2 animate-marker z-20" style="transition-delay: 200ms;">
+                            <div class="w-4 h-4 bg-dark border-2 border-dark shadow-[2px_2px_0_#1A1A1A]"></div>
+                            <span class="absolute top-5 left-1/2 -translate-x-1/2 font-mono text-[10px] bg-white border-2 border-dark whitespace-nowrap px-1 font-bold text-white z-30">Occasional Food</span>
+                        </div>
+                        
+                        <div class="absolute top-[80%] left-[20%] -translate-x-1/2 -translate-y-1/2 animate-marker z-20" style="transition-delay: 300ms;">
+                            <div class="w-4 h-4 bg-warning border-2 border-dark shadow-[2px_2px_0_#1A1A1A]"></div>
+                            <span class="absolute top-5 left-1/2 -translate-x-1/2 font-mono text-[10px] bg-white border-2 border-dark whitespace-nowrap px-1 font-bold z-30">Deal Seekers</span>
+                        </div>
+
+                        <!-- LTV Arrow directly via SVG absolute positioned -->
+                        <svg class="absolute top-[25%] left-[32%] w-[45%] h-[15%] z-10 animate-pie" viewBox="0 0 100 20" preserveAspectRatio="none">
+                            <path d="M0,20 Q50,-10 95,5" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-dasharray="4 4" />
+                            <polygon points="95,5 90,0 90,10" fill="#1A1A1A" />
+                        </svg>
+                        <div class="absolute top-[28%] left-[50%] -translate-x-1/2 bg-white px-1 border-2 border-dark font-mono text-[9px] font-bold uppercase animate-marker" style="transition-delay: 400ms;">LTV Path</div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SLIDE 3: INDUSTRY & COMPETITOR LANDSCAPE -->
+        <section class="reveal space-y-12 chart-trigger">
+            <div class="max-w-2xl">
+                <h2 class="text-4xl md:text-5xl font-display font-black uppercase mb-6 bg-dark text-white inline-block px-4 py-2 border-4 border-transparent shadow-[6px_6px_0_#E23744]">
+                    Competitive Landscape
+                </h2>
+                <div class="bg-white border-4 border-dark p-6 shadow-brutal text-lg space-y-4">
+                    <p>Zomato leads on <strong>Ecosystem Breadth</strong> and <strong>Profitability Trajectory</strong>. Swiggy competes on food share and Instamart density. Zepto wins on pure <strong>Quick Commerce</strong> speed.</p>
+                    <p><strong>ONDC</strong> players offer cost advantage but lack full-stack experience. Zomato wins on brand, loyalty, and ads moat.</p>
+                </div>
+            </div>
+
+            <!-- 2x2 Matrix & Features -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+
+                <!-- 2x2 Matrix -->
+                <div class="col-span-1 lg:col-span-8 bg-paper border-4 border-dark p-4 shadow-brutal relative min-h-[500px] h-[500px]">
+                    <div class="w-full h-full border-4 border-dark bg-white relative overflow-hidden">
+                        <!-- Grid Lines -->
+                        <div class="absolute top-1/2 left-0 w-full border-t-4 border-dark border-dashed -translate-y-1/2"></div>
+                        <div class="absolute top-0 left-1/2 h-full border-l-4 border-dark border-dashed -translate-x-1/2"></div>
+
+                        <!-- Axes Labels -->
+                        <div class="absolute top-4 left-1/2 -translate-x-1/2 bg-white px-2 font-mono text-xs font-bold z-10 text-center uppercase">EBITDA Positive</div>
+                        <div class="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white px-2 font-mono text-xs font-bold z-10 text-center uppercase">Growth-Only</div>
+                        <div class="absolute top-1/2 right-4 -translate-y-1/2 bg-white px-2 font-mono text-xs font-bold z-10 text-right uppercase bg-white">Ecosystem</div>
+                        <div class="absolute top-1/2 left-4 -translate-y-1/2 bg-white px-2 font-mono text-xs font-bold z-10 text-left uppercase">Single Category</div>
+
+                        <!-- Quadrant Labels -->
+                        <div class="absolute top-6 right-6 text-primary/20 font-body text-2xl font-black uppercase z-0 pointer-events-none">Leaders</div>
+
+                        <!-- Markers -->
+                        <!-- Zomato Marker -->
+                        <div class="absolute top-[20%] left-[85%] -translate-x-1/2 -translate-y-1/2 group z-20 animate-marker">
+                            <div class="bg-primary w-8 h-8 border-4 border-dark shadow-[4px_4px_0_#1A1A1A] transition-transform group-hover:scale-125 relative z-10"></div>
+                            <span class="absolute top-full left-1/2 -translate-x-1/2 mt-3 font-bold bg-white px-2 py-1 border-2 border-dark text-sm z-30 uppercase whitespace-nowrap shadow-[2px_2px_0_#1A1A1A]">Zomato</span>
+                        </div>
+
+                        <!-- Swiggy Marker -->
+                        <div class="absolute top-[35%] left-[65%] -translate-x-1/2 -translate-y-1/2 group z-20 animate-marker" style="transition-delay: 100ms;">
+                            <div class="bg-dark w-5 h-5 border-4 border-dark transition-transform group-hover:scale-125 relative z-10"></div>
+                            <span class="absolute top-full left-1/2 -translate-x-1/2 mt-3 font-bold bg-white px-2 py-0.5 border-2 border-dark text-xs z-30 uppercase whitespace-nowrap text-dark">Swiggy</span>
+                        </div>
+
+                        <!-- Zepto Marker -->
+                        <div class="absolute top-[75%] left-[80%] -translate-x-1/2 -translate-y-1/2 group z-20 animate-marker" style="transition-delay: 200ms;">
+                            <div class="bg-dark w-5 h-5 border-4 border-dark transition-transform group-hover:scale-125 relative z-10"></div>
+                            <span class="absolute top-full left-1/2 -translate-x-1/2 mt-3 font-bold bg-white px-2 py-0.5 border-2 border-dark text-xs z-30 uppercase whitespace-nowrap text-dark">Zepto</span>
+                        </div>
+
+                        <!-- Magicpin Marker -->
+                        <div class="absolute top-[70%] left-[15%] -translate-x-1/2 -translate-y-1/2 group z-20 animate-marker" style="transition-delay: 300ms;">
+                            <div class="bg-warning w-5 h-5 border-4 border-dark transition-transform group-hover:scale-125 relative z-10"></div>
+                            <span class="absolute top-full left-1/2 -translate-x-1/2 mt-3 font-bold bg-white px-2 py-0.5 border-2 border-dark text-xs z-30 uppercase whitespace-nowrap text-dark">Magicpin</span>
+                        </div>
+
+                        <!-- Tata Neu Marker -->
+                        <div class="absolute top-[60%] left-[35%] -translate-x-1/2 -translate-y-1/2 group z-20 animate-marker" style="transition-delay: 400ms;">
+                            <div class="bg-dark w-5 h-5 border-4 border-dark transition-transform group-hover:scale-125 relative z-10"></div>
+                            <span class="absolute top-full left-1/2 -translate-x-1/2 mt-3 font-bold bg-white px-2 py-0.5 border-2 border-dark text-xs z-30 uppercase whitespace-nowrap text-dark">Tata Neu</span>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Feature Snapshot -->
+                <div class="col-span-1 lg:col-span-4 flex flex-col justify-center space-y-6">
+                    <div class="font-display text-2xl font-black uppercase border-b-4 border-dark pb-2">At a Glance</div>
+
+                    <div class="bg-white border-4 border-dark p-4 shadow-brutal flex items-center justify-between">
+                        <span class="font-bold uppercase text-sm">Loyalty Program</span>
+                        <div class="flex gap-2">
+                            <span class="bg-primary text-white font-mono text-xs px-2 py-1 border-2 border-dark font-bold">Zomato Gold ✓</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-white border-4 border-dark p-4 shadow-brutal flex items-center justify-between">
+                        <span class="font-bold uppercase text-sm">Ads Revenue<br>Growth</span>
+                        <div class="flex gap-2 items-center">
+                            <span class="bg-primary text-white font-mono text-xs px-2 py-1 border-2 border-dark font-bold">Zomato 60%+ ✓</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-white border-4 border-dark p-4 shadow-brutal flex items-center justify-between">
+                        <span class="font-bold uppercase text-sm">QC Stores</span>
+                        <div class="flex gap-2">
+                            <span class="bg-primary text-white font-mono text-xs px-2 py-1 border-2 border-dark font-bold">Zomato 600+ ✓</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SLIDE 4: STRATEGIC ANALYSIS -->
+        <section class="reveal space-y-12">
+            <div class="flex justify-between items-end mb-6">
+                <h2 class="text-4xl md:text-5xl font-display font-black uppercase bg-dark text-white inline-block px-4 py-2 border-4 border-transparent shadow-[6px_6px_0_#E23744]">
+                    Strategic Analysis
+                </h2>
+                <div class="hidden md:block font-mono font-bold text-lg border-4 border-dark px-4 py-2 bg-white shadow-brutal stamp alt">
+                    SWOT + DRIVERS
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                <!-- SWOT Matrix -->
+                <div class="col-span-1 lg:col-span-8 grid grid-cols-1 md:grid-cols-2 bg-white border-4 border-dark shadow-brutal">
+
+                    <!-- Strengths -->
+                    <div class="p-6 border-b-4 md:border-b-0 md:border-r-4 border-dark border-dashed bg-primary/10 relative h-full">
+                        <div class="font-display font-black text-2xl uppercase mb-4 text-primary">Strengths</div>
+                        <ul class="space-y-3 font-bold text-sm">
+                            <li class="flex items-start gap-2"><i data-feather="check-square" class="text-primary mt-1 w-4 h-4 shrink-0"></i> Blinkit scale and path to profitability.</li>
+                            <li class="flex items-start gap-2"><i data-feather="check-square" class="text-primary mt-1 w-4 h-4 shrink-0"></i> <strong>Zomato Gold</strong> creating sticky loyalty.</li>
+                            <li class="flex items-start gap-2"><i data-feather="check-square" class="text-primary mt-1 w-4 h-4 shrink-0"></i> Ads revenue growing 60%+ <strong>YoY</strong> (margin lever).</li>
+                            <li class="flex items-start gap-2"><i data-feather="check-square" class="text-primary mt-1 w-4 h-4 shrink-0"></i> First-mover advantage with <strong>District</strong>.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Weaknesses -->
+                    <div class="p-6 border-b-4 border-dark border-dashed bg-warning/10 h-full">
+                        <div class="font-display font-black text-2xl uppercase mb-4 text-warning">Weaknesses</div>
+                        <ul class="space-y-3 font-bold text-sm">
+                            <li class="flex items-start gap-2"><i data-feather="alert-octagon" class="text-warning mt-1 w-4 h-4 shrink-0"></i> Food delivery growth maturing.</li>
+                            <li class="flex items-start gap-2"><i data-feather="alert-octagon" class="text-warning mt-1 w-4 h-4 shrink-0"></i> <strong>District</strong> app needs critical mass.</li>
+                            <li class="flex items-start gap-2"><i data-feather="alert-octagon" class="text-warning mt-1 w-4 h-4 shrink-0"></i> Regulatory scrutiny on gig worker policies.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Opportunities -->
+                    <div class="p-6 border-b-4 md:border-b-0 md:border-r-4 border-dark border-dashed bg-secondary/10 h-full">
+                        <div class="font-display font-black text-2xl uppercase mb-4 text-secondary">Opportunities</div>
+                        <ul class="space-y-3 font-bold text-sm">
+                            <li class="flex items-start gap-2"><i data-feather="target" class="text-secondary mt-1 w-4 h-4 shrink-0"></i> Cross-pollinate users across Food, <strong>QC</strong>, and District.</li>
+                            <li class="flex items-start gap-2"><i data-feather="target" class="text-secondary mt-1 w-4 h-4 shrink-0"></i> Expand <strong>Hyperpure</strong> to non-restaurant <strong>B2B</strong>.</li>
+                            <li class="flex items-start gap-2"><i data-feather="target" class="text-secondary mt-1 w-4 h-4 shrink-0"></i> Leverage cross-service ads data flywheel.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Threats -->
+                    <div class="p-6 bg-amber/10 h-full">
+                        <div class="font-display font-black text-2xl uppercase mb-4 text-amber">Threats</div>
+                        <ul class="space-y-3 font-bold text-sm">
+                            <li class="flex items-start gap-2"><i data-feather="zap" class="text-amber mt-1 w-4 h-4 shrink-0"></i> Swiggy aggression on food and Instamart.</li>
+                            <li class="flex items-start gap-2"><i data-feather="zap" class="text-amber mt-1 w-4 h-4 shrink-0"></i> Zepto gaining share in <strong>QC</strong> with speed focus.</li>
+                            <li class="flex items-start gap-2"><i data-feather="zap" class="text-amber mt-1 w-4 h-4 shrink-0"></i> <strong>ONDC</strong> disrupting commission models.</li>
+                        </ul>
+                    </div>
+
+                </div>
+
+                <!-- Driver Buckets -->
+                <div class="col-span-1 lg:col-span-4 flex flex-col gap-6">
+                    <!-- User Driver -->
+                    <div class="bg-white border-4 border-primary p-5 shadow-[6px_6px_0_#E23744] flex flex-col items-start hover:-translate-y-1 hover:-translate-x-1 hover:shadow-brutalhover transition-all">
+                        <h3 class="font-display font-black text-lg uppercase mb-2">User Driver 🧠</h3>
+                        <p class="text-sm font-semibold">Consumers want a unified lifestyle experience for eating in, eating out, and instant needs.</p>
+                    </div>
+
+                    <!-- Product Driver -->
+                    <div class="bg-white border-4 border-secondary p-5 shadow-[6px_6px_0_#000000] flex flex-col items-start hover:-translate-y-1 hover:-translate-x-1 hover:shadow-brutalhover transition-all">
+                        <h3 class="font-display font-black text-lg uppercase mb-2">Product Driver 🤖</h3>
+                        <p class="text-sm font-semibold"><strong>Gold</strong> + Blinkit ecosystems create sticky lock-in moats compared to single-category apps.</p>
+                    </div>
+
+                    <!-- Market Driver -->
+                    <div class="bg-white border-4 border-accent p-5 shadow-[6px_6px_0_#22C55E] flex flex-col items-start hover:-translate-y-1 hover:-translate-x-1 hover:shadow-brutalhover transition-all">
+                        <h3 class="font-display font-black text-lg uppercase mb-2">Market Driver 📈</h3>
+                        <p class="text-sm font-semibold"><strong>QC Market</strong> growing <span class="font-mono bg-dark text-white px-1 font-bold">40%+ YoY</span>. Ad budgets shifting towards commerce platforms.</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SLIDE 5: CORE INSIGHT -->
+        <section class="reveal space-y-16">
+            <h2 class="text-4xl md:text-5xl font-display font-black uppercase text-center mx-auto bg-dark text-white inline-block px-4 py-2 border-4 border-transparent shadow-[6px_6px_0_#E23744] block w-max">
+                Insight & Opportunity Zones
+            </h2>
+
+            <div class="flex flex-col lg:flex-row gap-16 items-center">
+                <!-- Insight Box -->
+                <div class="w-full lg:w-1/2 bg-white border-4 border-primary p-8 shadow-[8px_8px_0_#1A1A1A] relative">
+                    <div class="absolute -top-5 -left-5 stamp shadow-brutal bg-dark text-white font-mono font-bold px-3 py-1 border-4 border-dark">
+                        KEY INSIGHT</div>
+
+                    <h3 class="font-display font-black text-2xl uppercase leading-tight mb-4 mt-4 text-primary">
+                        Zomato has secured food leadership and QC scale. The next step is ecosystem orchestration.
+                    </h3>
+                    <p class="text-lg font-medium leading-relaxed text-dark/90">
+                        Users should feel Zomato as one unified lifestyle platform where <strong>Gold</strong> and data seamlessly connect Food, <strong>QC</strong>, and Going Out (District), maximizing <strong>LTV</strong> while defending margins against competitors and <strong>ONDC</strong>.
+                    </p>
+                </div>
+
+                <!-- Arrow Logic Area -->
+                <div class="hidden lg:flex justify-center items-center">
+                    <svg width="60" height="40" viewBox="0 0 60 40" fill="none" stroke="#1A1A1A" stroke-width="4">
+                        <path d="M0 20 H56 M40 4 L56 20 L40 36" />
+                    </svg>
+                </div>
+
+                <!-- Opportunity Cards -->
+                <div class="w-full lg:w-1/2 flex flex-col gap-6 relative">
+
+                    <!-- Zone 1 -->
+                    <div class="bg-white border-l-8 border-y-4 border-r-4 border-secondary p-6 shadow-brutal ml-0 lg:-ml-12 hover:-translate-x-2 transition-transform">
+                        <div class="flex items-center gap-4 mb-2">
+                            <div class="bg-secondary p-2 border-2 border-dark text-white"><i data-feather="award"></i></div>
+                            <h4 class="font-display font-black text-xl uppercase">Gold as Ecosystem Glue</h4>
+                        </div>
+                        <p class="text-sm font-semibold text-dark/80 pl-16">Extend <strong>Gold</strong> benefits across Blinkit and District to drive cross-adoption and lock-in.</p>
+                    </div>
+
+                    <!-- Zone 2 -->
+                    <div class="bg-white border-l-8 border-y-4 border-r-4 border-primary p-6 shadow-[6px_6px_0_#E23744] ml-0 lg:ml-0 hover:-translate-x-2 transition-transform z-10 relative">
+                        <div class="absolute -top-6 -right-6 stamp alt z-20">
+                            <div class="bg-primary text-white border-4 border-dark px-3 py-1 font-mono font-bold shadow-brutal">EXPLORE</div>
+                        </div>
+                        <div class="flex items-center gap-4 mb-2">
+                            <div class="bg-primary text-white p-2 border-2 border-dark"><i data-feather="map"></i></div>
+                            <h4 class="font-display font-black text-xl uppercase">District Network Effects</h4>
+                        </div>
+                        <p class="text-sm font-semibold text-dark/80 pl-16">Accelerate merchant and user onboarding for events/dining to win "going out" category.</p>
+                    </div>
+
+                    <!-- Zone 3 -->
+                    <div class="bg-white border-l-8 border-y-4 border-r-4 border-accent p-6 shadow-brutal ml-0 lg:ml-12 hover:-translate-x-2 transition-transform">
+                        <div class="flex items-center gap-4 mb-2">
+                            <div class="bg-accent p-2 border-2 border-dark"><i data-feather="bar-chart-2"></i></div>
+                            <h4 class="font-display font-black text-xl uppercase">Ads Data Flywheel</h4>
+                        </div>
+                        <p class="text-sm font-semibold text-dark/80 pl-16">Use cross-service behavior data to offer hyper-targeted ads for brands and restaurants.</p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 6: CTA -->
+        <section class="reveal pt-12 pb-24">
+            <div class="max-w-3xl mx-auto bg-white border-6 border-dark shadow-[12px_12px_0_#1A1A1A] relative text-center">
+
+                <div class="h-4 w-full bg-primary border-b-6 border-dark block"></div>
+                <div class="absolute -top-4 right-10 stamp bg-warning border-4 border-dark px-3 py-2 text-xs font-mono font-bold shadow-brutal marquee-content ml-4 w-[250px] whitespace-nowrap overflow-hidden">
+                    <div class="marquee-content inline-block">I have some rough thoughts on ecosystem orchestration frameworks — happy to share if useful. &nbsp;•&nbsp; </div>
+                </div>
+
+                <div class="p-10 md:p-16 space-y-8 mt-4">
+                    <h2 class="font-display font-black text-3xl md:text-5xl uppercase leading-none">
+                        This is a space I'd genuinely love to explore deeper.
+                    </h2>
+
+                    <p class="text-xl md:text-2xl font-medium">
+                        I'm currently looking for an internship for Summer 2026, and would be excited to work on problems like this with your team.
+                    </p>
+
+                    <div class="bg-paper border-4 border-dark border-dashed p-6 text-left max-w-sm mx-auto shadow-brutal mt-8">
+                        <p class="font-display font-black text-2xl uppercase">Kunj Harjai</p>
+                        <p class="font-mono font-bold mt-2">Kunj.24141@sscbs.du.ac.in</p>
+                        <p class="font-mono font-bold">+91 93 109 29 096</p>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row justify-center items-center gap-6 pt-8">
+                        <a href="https://www.linkedin.com/in/kunjharjai/" target="_blank" rel="noopener noreferrer"
+                            class="btn-brutal bg-secondary text-white border-4 border-dark px-6 py-4 font-mono font-bold uppercase shadow-[6px_6px_0_#1A1A1A] w-full sm:w-auto flex justify-center items-center gap-2">
+                            LinkedIn <i data-feather="arrow-right" class="w-5 h-5 text-white"></i>
+                        </a>
+                        <a href="https://calendly.com/kunjharjai13/30min" target="_blank" rel="noopener noreferrer"
+                            class="btn-brutal bg-primary text-white border-4 border-dark px-6 py-4 font-mono font-bold uppercase shadow-[6px_6px_0_#1A1A1A] w-full sm:w-auto flex justify-center items-center gap-2">
+                            Schedule a 15-min Chat <i data-feather="clock" class="w-5 h-5"></i>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-dark text-white py-12 border-t-8 border-primary text-center">
+        <p class="font-mono text-sm tracking-widest uppercase">Kunj Harjai • Zomato Strategic Deck • Summer 2026</p>
+    </footer>
+
+    <script>
+        // Initialize Feather Icons
+        feather.replace();
+
+        // Scroll Reveal Logic
+        document.addEventListener('DOMContentLoaded', () => {
+            const reveals = document.querySelectorAll('.reveal');
+
+            const revealOnScroll = () => {
+                const windowHeight = window.innerHeight;
+                const elementVisible = 100;
+
+                reveals.forEach((reveal) => {
+                    const elementTop = reveal.getBoundingClientRect().top;
+                    if (elementTop < windowHeight - elementVisible) {
+                        reveal.classList.add('active');
+                    }
+                });
+                
+                // Chart triggers
+                const chartTriggers = document.querySelectorAll('.chart-trigger');
+                chartTriggers.forEach((trigger) => {
+                    const elementTop = trigger.getBoundingClientRect().top;
+                    if (elementTop < windowHeight - elementVisible) {
+                        trigger.classList.add('active');
+                    }
+                });
+            };
+
+            // Initial firing
+            revealOnScroll();
+            window.addEventListener('scroll', revealOnScroll);
+        });
+    </script>
+</body>
+</html>
